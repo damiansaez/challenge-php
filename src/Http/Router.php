@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Exceptions\NotFoundException;
+
 final class Router
 {
     /** @var array<int, array{method: string, pattern: string, handler: callable}> */
@@ -32,6 +34,6 @@ final class Router
             }
         }
 
-        JsonResponse::send(['error' => ['code' => 404, 'message' => 'Ruta no encontrada']], 404);
+        throw new NotFoundException('Ruta no encontrada');
     }
 }

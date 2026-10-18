@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Http\ExceptionHandler;
 use App\Http\JsonResponse;
 use App\Http\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+ExceptionHandler::register();
 
 $router = new Router();
 
