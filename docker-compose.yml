@@ -25,6 +25,7 @@ services:
       dockerfile: docker/php/Dockerfile
     container_name: challenge-app
     restart: unless-stopped
+    command: sh -c "composer install --no-interaction && exec apache2-foreground"
     depends_on:
       db:
         condition: service_healthy
