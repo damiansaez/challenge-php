@@ -9,9 +9,6 @@ use Throwable;
 
 class HttpException extends RuntimeException
 {
-    /**
-     * @param array<string, string> $details
-     */
     public function __construct(
         string $message,
         private readonly int $statusCode,
@@ -26,11 +23,14 @@ class HttpException extends RuntimeException
         return $this->statusCode;
     }
 
-    /**
-     * @return array<string, string>
-     */
+
     public function getDetails(): array
     {
         return $this->details;
+    }
+
+    public function getHeaders(): array
+    {
+        return [];
     }
 }

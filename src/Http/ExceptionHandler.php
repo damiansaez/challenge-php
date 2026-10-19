@@ -32,6 +32,10 @@ final class ExceptionHandler
             if ($e->getDetails() !== []) {
                 $error['details'] = $e->getDetails();
             }
+
+            foreach ($e->getHeaders() as $name => $value) {
+                header("{$name}: {$value}");
+            }
         } else {
             error_log((string) $e);
 

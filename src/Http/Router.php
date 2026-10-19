@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Exceptions\MethodNotAllowedException;
 use App\Exceptions\NotFoundException;
 
 final class Router
@@ -26,12 +27,25 @@ final class Router
     {
         $path = rtrim((string) parse_url($uri, PHP_URL_PATH), '/') ?: '/';
 
+        $allowedMethods = [];
+
         foreach ($this->routes as $route) {
-            if ($route['method'] === $method && preg_match($route['pattern'], $path, $matches)) {
-                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
-                ($route['handler'])($params);
-                return;
+            if (!preg_match($route['pattern'], $path, $matches)) {
+                continue;
             }
+
+            if ($route['method'] !== $method) {
+                $allowedMethods[] = $route['method'];
+                continue;
+            }
+
+            $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+            ($route['handler'])(...$params);
+            return;
+        }
+
+        if ($allowedMethods !== []) {
+            throw new MethodNotAllowedException($allowedMethods);
         }
 
         throw new NotFoundException('Ruta no encontrada');
