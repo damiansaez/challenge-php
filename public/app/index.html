@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de productos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="container">
+    <h1>Gestión de productos</h1>
+
+    <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+
+    <section class="card">
+        <h2 id="form-title">Agregar producto</h2>
+
+        <form id="product-form" novalidate>
+            <div class="field">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" maxlength="255" required>
+                <small class="field-error" data-error-for="nombre"></small>
+            </div>
+
+            <div class="field">
+                <label for="descripcion">Descripción <span class="optional">(opcional)</span></label>
+                <textarea id="descripcion" name="descripcion" rows="3" maxlength="500"></textarea>
+                <small class="field-error" data-error-for="descripcion"></small>
+            </div>
+
+            <div class="field">
+                <label for="precio">Precio en pesos (ARS)</label>
+                <input type="text" id="precio" name="precio" inputmode="decimal" placeholder="Ej: 49999.99" autocomplete="off" required>
+                <small class="field-error" data-error-for="precio"></small>
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="submit-button" class="primary">Agregar</button>
+                <button type="button" id="cancel-button" hidden>Cancelar edición</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Productos</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th class="number">Precio (ARS)</th>
+                    <th class="number">Precio (USD)</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="product-list"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
